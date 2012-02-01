@@ -80,6 +80,10 @@ class Chosen extends AbstractChosen
     @search_results.mouseup (evt) => this.search_results_mouseup(evt)
     @search_results.mouseover (evt) => this.search_results_mouseover(evt)
     @search_results.mouseout (evt) => this.search_results_mouseout(evt)
+    @search_results.delegate 'a.add', 'click', (evt) =>
+      evt.preventDefault()
+      this.search_results_delegate_add_click(evt)
+
 
     @form_field_jq.bind "liszt:updated", (evt) => this.results_update_field(evt)
 
@@ -280,6 +284,10 @@ class Chosen extends AbstractChosen
   search_results_mouseout: (evt) ->
     this.result_clear_highlight() if $(evt.target).hasClass "active-result" or $(evt.target).parents('.active-result').first()
 
+  search_results_delegate_add_click: (evt) ->
+    console.log("oh my click men")
+    keyup_event = new $.Event('keyup', {keyCode: 13})
+    this.search_field.trigger(keyup_event) # trigger keyup event
 
   choices_click: (evt) ->
     evt.preventDefault()
@@ -470,9 +478,12 @@ class Chosen extends AbstractChosen
       this.result_do_highlight do_high if do_high?
   
   no_results: (terms) ->
-    return if !@is_multiple && @options.allow_option_creation
-    no_results_html = $('<li class="no-results">' + @results_none_found + ' "<span></span>"</li>')
-    no_results_html.find("span").first().html(terms)
+    text = __(@options.messages.no_result_text, {'%term%': terms})
+    if @options.allow_option_creation
+      link = '<a class="add" href="#">' + __(@options.messages.add_option_link_text) + '</a>'
+      text += '. ' + __(@options.messages.add_option_text, {'%link%': link})
+
+    no_results_html = $('<li class="no-results">' + text + '</li>')
 
     @search_results.append no_results_html
   

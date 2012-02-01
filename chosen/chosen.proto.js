@@ -115,7 +115,8 @@ Copyright (c) 2011 by Harvest
     }
 
     AbstractChosen.prototype.set_default_values = function() {
-      var _this = this;
+      var _base, _base2, _base3, _base4, _ref,
+        _this = this;
       this.click_test_action = function(evt) {
         return _this.test_active_click(evt);
       };
@@ -130,7 +131,15 @@ Copyright (c) 2011 by Harvest
       this.allow_single_deselect = (this.options.allow_single_deselect != null) && (this.form_field.options[0] != null) && this.form_field.options[0].text === "" ? this.options.allow_single_deselect : false;
       this.disable_search_threshold = this.options.disable_search_threshold || 0;
       this.choices = 0;
-      return this.results_none_found = this.options.no_results_text || "No results match";
+      this.results_none_found = this.options.no_results_text || "No results match";
+      if ((_base = this.options).messages == null) _base.messages = {};
+      if ((_base2 = this.options.messages).no_result_text == null) {
+        _base2.no_result_text = 'No results match "%term%"';
+      }
+      if ((_base3 = this.options.messages).add_option_text == null) {
+        _base3.add_option_text = 'Click on %link% to add';
+      }
+      return (_ref = (_base4 = this.options.messages).add_option_link_text) != null ? _ref : _base4.add_option_link_text = 'this link';
     };
 
     AbstractChosen.prototype.mouse_enter = function() {

@@ -31,6 +31,11 @@ class AbstractChosen
     @disable_search_threshold = @options.disable_search_threshold || 0
     @choices = 0
     @results_none_found = @options.no_results_text or "No results match"
+    @options.messages ?= {}
+    @options.messages.no_result_text ?= 'No results match "%term%"'
+    @options.messages.add_option_text ?= 'Click on %link% to add'
+    @options.messages.add_option_link_text ?= 'this link'
+
 
   mouse_enter: -> @mouse_on_container = true
   mouse_leave: -> @mouse_on_container = false
