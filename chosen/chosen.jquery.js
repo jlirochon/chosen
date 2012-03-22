@@ -278,8 +278,10 @@ Copyright (c) 2011 by Harvest
 
   $.fn.extend({
     chosen: function(options) {
-      if ($.browser.msie && ($.browser.version === "6.0" || $.browser.version === "7.0")) {
-        return this;
+      if (!(options.forceIE != null)) {
+        if ($.browser.msie && ($.browser.version === "6.0" || $.browser.version === "7.0")) {
+          return this;
+        }
       }
       return $(this).each(function(input_field) {
         if (!($(this)).hasClass("chzn-done")) return new Chosen(this, options);
@@ -632,7 +634,6 @@ Copyright (c) 2011 by Harvest
 
     Chosen.prototype.search_results_delegate_add_click = function(evt) {
       var keyup_event;
-      console.log("oh my click men");
       keyup_event = new $.Event('keyup', {
         keyCode: 13
       });
