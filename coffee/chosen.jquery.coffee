@@ -285,7 +285,6 @@ class Chosen extends AbstractChosen
     this.result_clear_highlight() if $(evt.target).hasClass "active-result" or $(evt.target).parents('.active-result').first()
 
   search_results_delegate_add_click: (evt) ->
-    console.log("oh my click men")
     keyup_event = new $.Event('keyup', {keyCode: 13})
     this.search_field.trigger(keyup_event) # trigger keyup event
 
